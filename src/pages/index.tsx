@@ -1,4 +1,5 @@
-import PokemonList from "./api/pokemon";
+import PokeFooter from "@/components/footer";
+import GetPokemonList from "./api/pokemon";
 
 export default function Home() {
 
@@ -19,9 +20,16 @@ export default function Home() {
         </div>
 
         <div className="mx-10 mt-10">
-          <PokemonList />
+          <h1 className="text-2xl font-bold text-center mb-6">Liste des Pokémon</h1>
+          <GetPokemonList />
         </div>
+
+
       </div>
+
+      <br />
+      
+      <PokeFooter/>
     </>
 
   );
