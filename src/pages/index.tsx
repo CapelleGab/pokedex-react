@@ -1,7 +1,24 @@
+import { useState } from 'react';
 import PokeFooter from "@/components/footer";
 import GetPokemonList from "./api/pokemon";
+import PokemonOverlay, { PokemonOverlayProps } from "@/components/pokemonOverlay";
+import { getPokemonStats } from './api/pokemon';
 
 export default function Home() {
+  const [selectedPokemon, setSelectedPokemon] = useState<PokemonOverlayProps | null>(null);
+
+
+  function handlePokemonClick(name: string) {
+    getPokemonStats(name).then(pokemonData => {
+      if (pokemonData) {
+        setSelectedPokemon(pokemonData);
+      }
+    });
+  }
+
+  function closeOverlay() {
+    setSelectedPokemon(null);
+  }
 
   return (
     <>
@@ -21,16 +38,24 @@ export default function Home() {
 
         <div className="mx-10 mt-10">
           <h1 className="text-2xl font-bold text-center mb-6">Liste des Pokémon</h1>
-          <GetPokemonList />
+          <GetPokemonList onPokemonClick={handlePokemonClick} />
         </div>
-
-
       </div>
 
       <br />
       
-      <PokeFooter/>
+      {selectedPokemon && (
+        <PokemonOverlay
+          name={selectedPokemon.name}
+          image={selectedPokemon.image}
+          stats={selectedPokemon.stats}
+          types={selectedPokemon.types}
+          abilities={selectedPokemon.abilities}
+          onClose={closeOverlay}
+        />
+      )}
+      
+      <PokeFooter />
     </>
-
   );
 }

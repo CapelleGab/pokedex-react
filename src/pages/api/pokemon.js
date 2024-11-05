@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import PokemonCard from '@/components/cards'
+import PokemonCard from '@/components/cards';
 
-export default function GetPokemonList() {
+export default function GetPokemonList({ onPokemonClick }) {
   const [pokemons, setPokemons] = useState([]);
   const [error, setError] = useState(null);
 
@@ -26,13 +26,18 @@ export default function GetPokemonList() {
         setError(error.message);
       });
   }, []); 
-  
+
   return (
     <>
       {error && <p className="text-red-500 text-center">{error}</p>}
       <div className="grid grid-cols-5 gap-4">
         {pokemons.map((pokemon, index) => (
-          <PokemonCard key={index} name={pokemon.name} image={pokemon.image} />
+          <PokemonCard
+            key={index}
+            name={pokemon.name}
+            image={pokemon.image}
+            onClick={() => onPokemonClick(pokemon.name)}
+          />
         ))}
       </div>
     </>
@@ -66,4 +71,3 @@ export function getPokemonStats(name) {
       return null;
     });
 }
-
