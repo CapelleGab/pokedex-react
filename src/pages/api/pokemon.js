@@ -64,6 +64,8 @@ export function getPokemonStats(name) {
         types: data.types.map(typeInfo => typeInfo.type.name),
         abilities: data.abilities.map(abilityInfo => abilityInfo.ability.name),
         image: data.sprites.front_default,
+        imageShiny: data.sprites.front_shiny,
+        id: data.id
       };
     })
     .catch(error => {

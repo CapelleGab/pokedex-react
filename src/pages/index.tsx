@@ -48,8 +48,10 @@ export default function Home() {
         <PokemonOverlay
           name={selectedPokemon.name}
           image={selectedPokemon.image}
+          imageShiny={selectedPokemon.imageShiny}
           stats={selectedPokemon.stats}
           types={selectedPokemon.types}
+          id={selectedPokemon.id}
           abilities={selectedPokemon.abilities}
           onClose={closeOverlay}
         />
