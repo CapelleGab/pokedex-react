@@ -1,3 +1,5 @@
+import { getFrenchNameAbilities } from "./pokemon";
+
 export const StatsTranslation = {
     hp: "PV",
     attack: "Attaque",
@@ -22,6 +24,10 @@ export const TypesTranslation = {
     flying: "Vol",
     ice: "Glace",
     psychic: "Psy",
-    Steel: "Acier",  
+    steel: "Acier",  
 }
-export const AbilitiesTranslation = {}
+export const AbilitiesTranslation = {
+    
+}
+
+getFrenchNameAbilities()

@@ -17,9 +17,7 @@ export default function GetPokemonList({ onPokemonClick }) {
         return response.json();
       })
       .then(data => {
-        const pokemonsData = [];
-
-        data.results.forEach(pokemon => {
+        const pokemonPromises = data.results.map(pokemon =>
           fetch(pokemon.url)
             .then(res => {
               if (!res.ok) {
@@ -37,20 +35,23 @@ export default function GetPokemonList({ onPokemonClick }) {
                 })
                 .then(speciesData => {
                   const nameInFrench = speciesData.names.find(name => name.language.name === "fr")?.name;
-
-                  pokemonsData.push({
+                  return {
+                    pokedexID: details.id,
                     nameFR: nameInFrench,
                     name: pokemon.name,
                     image: details.sprites.front_default,
-                  });
-
-                  setPokemons([...pokemonsData]);
+                  };
                 });
             })
-            .catch(error => {
-              console.error("Erreur lors de la récupération d'un Pokémon :", error);
-            });
-        });
+        );
+        Promise.all(pokemonPromises)
+          .then(pokemonsData => {
+            pokemonsData.sort((a, b) => a.pokedexID - b.pokedexID);
+            setPokemons(pokemonsData);
+          })
+          .catch(error => {
+            console.error("Erreur lors de la récupération des Pokémon :", error);
+          });
       })
       .catch(error => {
         setError(error.message);
@@ -64,6 +65,7 @@ export default function GetPokemonList({ onPokemonClick }) {
         {pokemons.map((pokemon, index) => (
           <PokemonCard
             key={index}
+            pokedexID={pokemon.pokedexID}
             name={pokemon.nameFR}
             image={pokemon.image}
             onClick={() => onPokemonClick(pokemon.name)}
@@ -73,6 +75,7 @@ export default function GetPokemonList({ onPokemonClick }) {
     </>
   );
 }
+
 
 export function getPokemonStats(name) {
   const url = `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`;
@@ -129,4 +132,25 @@ export function getPokemonInformation(id) {
 
 }
 
-console.log(getPokemonInformation(1))
+export function getFrenchNameAbilities() {
+  const totalAbilities = 297; 
+
+  for (let i = 1; i <= totalAbilities; i++) { 
+    const url = `https://pokeapi.co/api/v2/ability/${i}`
+      fetch(url)
+      .then(response => {
+        if(!response.ok){
+          throw new Error("Erreur de requête !")
+        }
+        return response.json()
+      })
+      .then(data => {
+        const englishName = data.name; 
+        const frenchName = data.names.find(name => name.language.name === "fr")?.name;
+
+        if (frenchName) {
+            AbilitiesTranslation[englishName] = frenchName;
+        }
+      })
+  }
+}

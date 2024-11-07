@@ -36,7 +36,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mx-10 mt-10">
+        <div className="mx-52 mt-10">
           <h1 className="text-2xl font-bold text-center mb-6">Liste des Pokémon</h1>
           <GetPokemonList onPokemonClick={handlePokemonClick} />
         </div>
