@@ -34,7 +34,7 @@ const PokemonOverlay: React.FC<PokemonOverlayProps> = ({ name, image, stats, typ
           </div>
 
           <div className="mt-4">
-            <h3 className="font-semibold">Abilities:</h3>
+            <h3 className="font-semibold">Talents:</h3>
             <p>{abilities.join(', ')}</p>
           </div>
 

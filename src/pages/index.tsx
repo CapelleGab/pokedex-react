@@ -36,9 +36,22 @@ export default function Home() {
           </div>
         </div>
 
+        <div className='flex gap-10'>
+          <button>Pokédex</button>
+          <button>Boosters</button>
+        </div>
+
         <div className="mx-52 mt-10">
-          <h1 className="text-2xl font-bold text-center mb-6">Liste des Pokémon</h1>
-          <GetPokemonList onPokemonClick={handlePokemonClick} />
+          <div>
+            <div>
+              <h1 className="text-2xl font-bold text-center mb-6">Liste des Pokémon</h1>
+              <GetPokemonList onPokemonClick={handlePokemonClick} />
+            </div>
+            <div>
+              <h1>Ouverture de carte</h1>
+            </div>
+          </div>
+
         </div>
       </div>
 
